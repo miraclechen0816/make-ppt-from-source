@@ -1,0 +1,4 @@
+interface:
+  display_name: "数据源生成PPT工作流"
+  short_description: "从数据源生成完整PPT、逐页绘图提示词和配套演讲稿。"
+  default_prompt: "使用 $make-ppt-from-source：请上传PPT数据源，我会分析拆解内容，确认PPT要求与母版参考，生成提示词、逐页绘图、合成PPT，并基于最终PPT和数据源生成配套演讲稿。"
