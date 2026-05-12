@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Project defense PPT case visual</title>
+  <desc id="desc">A project defense presentation case showing deck pages and structured decision logic.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fafc"/><stop offset="1" stop-color="#ecfeff"/></linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d4ed8"/><stop offset="1" stop-color="#0891b2"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#0f172a" flood-opacity="0.14"/></filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <text x="72" y="86" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="36" font-weight="800" fill="#0f172a">案例一：项目申报答辩 PPT</text>
+  <text x="72" y="124" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="18" fill="#475569">把复杂材料拆解成“背景、方案、任务、指标、价值”的领导友好叙事</text>
+  <g filter="url(#shadow)">
+    <rect x="72" y="184" width="310" height="188" rx="18" fill="url(#card)"/>
+    <text x="102" y="232" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="24" font-weight="800" fill="#fff">封面页</text>
+    <text x="102" y="270" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="15" fill="#dbeafe">项目名称 / 答辩场景 / 关键词</text>
+    <path d="M103 321c48-48 118-52 198-16" fill="none" stroke="#bfdbfe" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="304" cy="292" r="18" fill="#f97316"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="445" y="184" width="310" height="188" rx="18" fill="#ffffff"/>
+    <text x="475" y="232" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="24" font-weight="800" fill="#0f172a">方案架构</text>
+    <rect x="482" y="268" width="82" height="48" rx="10" fill="#dbeafe"/>
+    <rect x="596" y="268" width="82" height="48" rx="10" fill="#dcfce7"/>
+    <rect x="540" y="328" width="82" height="48" rx="10" fill="#ffedd5"/>
+    <path d="M564 292h32M637 316l-38 12M523 316l38 12" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="818" y="184" width="310" height="188" rx="18" fill="#ffffff"/>
+    <text x="848" y="232" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="24" font-weight="800" fill="#0f172a">指标卡</text>
+    <rect x="850" y="268" width="70" height="72" rx="12" fill="#eff6ff"/>
+    <rect x="940" y="248" width="70" height="92" rx="12" fill="#ecfdf5"/>
+    <rect x="1030" y="286" width="70" height="54" rx="12" fill="#fff7ed"/>
+    <text x="885" y="360" text-anchor="middle" font-family="Arial" font-size="14" fill="#2563eb">覆盖</text>
+    <text x="975" y="360" text-anchor="middle" font-family="Arial" font-size="14" fill="#059669">效率</text>
+    <text x="1065" y="360" text-anchor="middle" font-family="Arial" font-size="14" fill="#ea580c">价值</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="160" y="450" width="880" height="106" rx="24" fill="#fff"/>
+    <text x="204" y="492" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="20" font-weight="800" fill="#0f172a">推荐页组</text>
+    <text x="204" y="528" font-family="Microsoft YaHei, PingFang SC, Arial, sans-serif" font-size="17" fill="#475569">需求背景 → 核心概念 → 系统架构 → 研发任务 → 技术指标 → 基础成果 → 价值建议</text>
+    <circle cx="955" cy="503" r="26" fill="#2563eb"/><text x="955" y="511" text-anchor="middle" font-family="Arial" font-size="22" font-weight="800" fill="#fff">PPT</text>
+  </g>
+</svg>
