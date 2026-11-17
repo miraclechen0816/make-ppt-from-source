@@ -1,14 +1,14 @@
 # Speaker Script Specification
 
-Generate the speech script after the final PPT/PPTX has been assembled. The script must be grounded in both the final PPT and the original data source.
+Generate the speech script after both the image-only PPTX and the object-editable PPTX are finalized. Use their shared final slide order, the complete slide images with all late-inserted pictures, and the original source material. Keep speaker notes consistent across both files. Set editable author, creator, and last-modifier identity fields to “用户” in script exports and both PPTX files.
 
 ## Inputs
 
 Use these inputs in priority order:
 
-1. Final PPT/PPTX slide order and slide titles.
+1. The matching final slide order and titles of both delivered PPTX files.
 2. Deck-level prompt document, especially page objectives, body copy, visual suggestions, and speaker-script points.
-3. Rendered slide images, when available, to understand what the audience will see.
+3. Complete final slide images after picture insertion and the actual renders of both PPTX files, to explain what the audience will see.
 4. Original source data, to recover accurate logic, evidence, definitions, and numbers.
 5. User-confirmed audience, duration, tone, and safety boundaries.
 

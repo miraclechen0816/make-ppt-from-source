@@ -1,4 +1,4 @@
 interface:
-  display_name: "数据源生成PPT工作流"
-  short_description: "从数据源生成完整PPT、逐页绘图提示词和配套演讲稿。"
-  default_prompt: "使用 $make-ppt-from-source：请上传PPT数据源，我会分析拆解内容，确认PPT要求与母版参考，生成提示词、逐页绘图、合成PPT，并基于最终PPT和数据源生成配套演讲稿。"
+  display_name: "资料到PPT · 五种风格与双版本"
+  short_description: "先选五种风格九宫格，组装后插图，融合图片转可编辑交付纯图片与可编辑PPT。"
+  default_prompt: "使用 $make-ppt-from-source，根据我的资料先展示5种风格，每种一张含封面、正文和结尾的九宫格，等我选定后逐页绘制并组装，预留图片位置后补齐配图，再通过图片转可编辑转换，交付纯图片版和可编辑版PPT及配套演讲稿。"

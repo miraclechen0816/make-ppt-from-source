@@ -1,36 +1,25 @@
-# Requirements Checklist
+# 需求对齐清单
 
-Use this checklist after reading and decomposing the user's source material. Present recommendations first, then ask the user to confirm or modify them. Do not proceed to final prompt documents until the user confirms.
+先读资料，再用简短建议集中对齐需求。用户已说明的选项直接沿用；只提出影响后续制作的关键问题。
 
-When the user writes in Chinese, present this confirmation set in Chinese.
+| 项目 | 对齐内容与默认建议 |
+|---|---|
+| 画幅与页数 | 默认 16:9；依据材料建议页数范围，并遵守用户的页数、时长要求。其他画幅保持成图和对象清单的比例一致。 |
+| 场景与受众 | 答辩、研究汇报、工作汇报、路演等；明确听众的知识基础与关注点。 |
+| 内容主线 | 结合材料提出叙事，保留关键论据、数字和结论的来源。 |
+| 视觉方向 | 默认展示 **5 种风格**；每种含封面、7 张代表性正文和结尾，共 9 张缩略页。先看实际九宫格，再选定全稿方向。 |
+| 配色与字体 | 结合参考模板建议主色、辅助色、强调色、中文与英文字体及标题层级；具体样式随风格选定。 |
+| 图标 | 统一图标风格、线条粗细与密度，服务页面信息。 |
+| 图片 | 先留位、组装后插图；明确真实照片、截图、数据图表与示意插图的用途和可用来源。 |
+| 母版与参考 | 确认是否有参考 PPT、品牌规范或图片，并明确其内容来源与视觉参考角色。 |
+| 交付 | 默认纯图片版与图片转可编辑 转换后的可编辑版两份 PPTX，并附两份提示词文档、成图、演讲稿。用户当次明确调整时沿用。 |
+| 演讲稿与备注 | 总时长、语气、讲者身份、逐页稿与连续稿需求，以及讲者备注。 |
+| 特殊约束 | 保密、敏感信息、可公开范围、明确指定的工具与通道、授权服务范围。 |
 
-## Bundled Confirmation Template
+## 确认方式
 
-```markdown
-I have analyzed the source material and recommend the following PPT requirements. Please confirm, or edit any item directly:
-
-1. Canvas format: 16:9 landscape / 4:3 / vertical / other
-2. Page count range: recommended X-Y pages; any hard page count or defense duration
-3. Scenario: project proposal defense / academic defense / business roadshow / work report / other
-4. Target audience: leaders and decision makers / expert reviewers / investors / technical team / mixed audience
-5. Narrative arc: for example "background and pain point -> core concepts -> solution architecture -> tasks and metrics -> proof and foundation -> value and recommendation"
-6. Style objective: academic and rigorous / technology-government / consulting report / brand launch / clean business / other
-7. Color scheme: main color, secondary color, accent color; whether to follow a reference master
-8. Typography plan: Chinese and English font preferences; title/body hierarchy
-9. Icon approach: line icons / solid icons / system UI icons / minimal icons
-10. Image approach: AI-generated visuals / data charts / real photos / abstract backgrounds / mixed
-11. PPT master or reference: whether the user will upload a PPT master, brand guide, or existing deck
-12. Speech script: total speaking duration, speaker identity, tone, and whether to output per-slide script, full continuous script, or both
-13. Output format: PPTX, two prompt documents, per-slide images, speech script, and whether speaker notes are needed
-14. Editability: image-only slides / image background plus editable text / mostly native editable PPT
-15. Safety boundary: any confidential, sensitive, forbidden, or abstract-only content
-```
-
-## Recommendation Rules
-
-- Infer sensible defaults from the source. Do not ask the user to fill a blank form.
-- If source content is dense or technical, recommend fewer words per slide and more visual decomposition.
-- If the user gives a PPT master/template, prioritize its canvas ratio, typography, title treatment, color system, divider style, and footer/page-number behavior.
-- For project defense decks, prefer a leadership-friendly arc: why it matters, what it is, what will be built, what indicators prove it, why the team can deliver, and what value or decision is requested.
-- For sensitive defense or security content, recommend abstract system diagrams, dashboards, maps, sensor icons, warning markers, and silhouettes rather than realistic equipment details.
-- For speech scripts, recommend a realistic duration based on page count. As a default, use 45-90 seconds per content-heavy slide and 15-30 seconds for cover,目录, transition, and ending slides.
+- 对尚未明确的关键需求集中询问，简述判断依据；已确定事项可以随预览一并列出。
+- 每个九宫格使用同一组真实内容，便于比较正文质量。五种风格的差异同时体现在排版、字体、图表和空间组织。
+- 展示五张实际预览后等待用户选定；已经明确授权的后续绘制、插图和转换持续推进。
+- 默认双版本交付直接落实。资料密集时优先拆页、分组和建立清晰的阅读顺序。
+- 演讲时长可按正文每页约 45–90 秒、封面与过渡结尾约 15–30 秒提出建议，以用户要求为准。

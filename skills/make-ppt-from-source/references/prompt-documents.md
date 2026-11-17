@@ -1,99 +1,74 @@
-# Prompt Document Specifications
+# 提示词文档规范
 
-Generate two prompt documents after the user confirms requirements. Match the user's language. For Chinese users, use Chinese section titles and Chinese body text.
+需求明确、五种风格九宫格展示且用户选定后，定稿两份提示词文档。预览阶段使用简要内容草案，正式文档记录用户选定的视觉规则与配图后插流程。
 
-## Document 1: Deck-Level Complete Prompt
+## 文档一：ppt_complete_prompt.md
 
-Use this structure:
+包含以下内容：
 
-```markdown
-# [PPT topic] complete prompt
+1. 使用说明：资料来源、引用位置、用途、受众、页数、时长、画幅、模板及交付范围。
+2. 可直接复用的总提示词：专业角色、内容主线、准确事实与数据、选定风格、全文页面规范与最终双版本要求。
+3. 总体结构：各章节作用、关键论点、证据与结论之间的关系。
+4. 逐页计划：每页准确文案、布局和图片位置，作为绘图与后续编辑重建的内容依据。
 
-Based on the user's uploaded data source; constrained by the confirmed PPT requirements and any reference master.
-
-## 1. Usage Notes
-
-- Document role: This is not the final PPT. It is a complete prompt that can be copied into a PPT-generation AI, given to a PPT planner, or used by the next production step.
-- Content source: Use only the uploaded data source for content. Use any reference master only for visual style, layout, and expression standards.
-- Defense audience: [target audience]
-- Hard constraints: [page count, duration, canvas, style, safety boundary, required coverage]
-
-## 2. Directly Reusable Total Prompt
-
-Act as a "[scenario] PPT planning expert, [domain] expression editor, and [technical/industry advisor when useful]". Based on the content of "[source name]", generate a PPT content plan suitable for [defense/report/roadshow].
-
-Strictly follow this logic: "[narrative arc]".
-
-Do not write the PPT like an essay or paper. Use short phrases, visual structure, and concise bullets. Split complex tables across pages or convert them into matrices, flowcharts, indicator cards, or architecture diagrams.
-
-Every page must output: page number and title, page objective, slide body copy, visual presentation suggestion, and speaker-script points.
-
-Overall style: [style, colors, typography hierarchy, chart density, master requirements]
-
-## 3. Overall Structure And Narrative Thread
-
-- Layer 1: [why it is needed]
-- Layer 2: [what the system/solution is]
-- Layer 3: [what it can do or how it works]
-- Layer 4: [why it can be delivered or what evidence supports it]
-- Layer 5: [value, decision request, or implementation path]
-
-## 4. Page-By-Page PPT Prompt Body
-
-### Page 1: [title]
-
-Page objective: [one sentence]
-
-Slide body copy:
-
-- [short bullet 1]
-- [short bullet 2]
-- [short bullet 3]
-
-Visual presentation suggestion: [recommended graphic, composition, chart, image, whitespace, and emphasis]
-
-Speaker-script points: [natural presenter notes]
-```
-
-Repeat the page block for every slide.
-
-The `speaker-script points` field is not the final speech script. It is a compact planning field that will later be expanded after the final PPT exists.
-
-## Document 2: Per-Slide AI Drawing Prompts
-
-Use this structure:
+逐页块采用：
 
 ```markdown
-# Per-slide AI drawing prompts
+### 第 N 页：标题
 
-For generating PPT diagrams, backgrounds, and infographics for [PPT topic].
+页面目标：本页希望观众理解的一个核心信息。
 
-## 1. Unified Drawing Specification
+资料依据：源文件及页码、表名或原始来源链接。
 
-- Canvas: 16:9 landscape PPT, preferably 3840x2160 or 1920x1080.
-- Style: [confirmed style]; main color [main color], secondary color [secondary color], accent color [accent color].
-- Typography: clear sans-serif style; strong title hierarchy; enough whitespace.
-- Visual principle: avoid long paragraphs; express ideas through architecture diagrams, flowcharts, matrices, indicator cards, map grids, system UI, data charts, and abstract scenes.
-- Safety expression: [abstract-expression rules for sensitive content; if none, say there are no special limits but still avoid misleading or dangerous visuals.]
-- Universal negative prompt: no dense tiny text, no messy layout, no low resolution, no excessive glow, no unrelated elements, [project-specific negatives].
+页面文案：按显示顺序写出全部标题、正文、数字、单位与必要说明，保留准确换行。
 
-## Page 1: [title]
+视觉布局：标题层级、信息分组、图表或流程、留白、颜色与字体。
 
-AI drawing prompt:
-[Full natural-language prompt. Include canvas, style, theme, core visual, points to express, composition requirements, and text-density requirements.]
+图片位置：无；或逐项写明 slot_id、用途、box_px、边界形式与裁切方式，对应 image_slots.json。
 
-Image keywords: [keyword 1], [keyword 2], [keyword 3], [keyword 4]
+配图要求：真实照片、截图、示意插图或事实图表的内容、来源与清晰度要求。
 
-Negative prompt: [page-specific negatives; inherit the universal negative prompt]
+讲稿要点：解释本页的逻辑与承上启下内容。
 ```
 
-Repeat the page block for every slide.
+总提示词明确：先按选定风格绘制带文字和图片空位的全稿，组装底稿后补入对应图片；完整成图定稿后制作纯图片版，再通过图片转可编辑 转为可编辑版。两版保持页序、内容、配图与备注一致。
 
-## Quality Rules
+讲稿要点是制作计划，正式演讲稿在两份 PPT 定稿后展开。
 
-- Each page prompt must be self-contained. Do not require the image model to remember previous pages.
-- Keep generated-slide text minimal. The PPT can carry precise text later; image generation should carry layout, diagrams, background, and large labels.
-- For chart pages, specify chart type, axis meaning, key values, and desired visual hierarchy.
-- For cover pages, make the project name the first-viewport signal.
-- For summary or ending pages, use closure diagrams such as value loops, roadmaps, decision requests, or implementation paths.
-- Avoid generic stock-photo wording. Describe the actual system, scene, product, dataset, or argument.
+## 文档二：per_slide_image_prompts.md
+
+### 统一规范
+
+- 选定风格名称、预览图片路径及用户的具体修改要求。
+- 画幅、请求分辨率、主题、主辅色与强调色、字体层级、留白与图表风格。
+- 页面文字随图片直接生成，明确列出准确文案及换行；校对错误后形成正式底稿。
+- 图片位置使用清洁底色或统一留位面板，配图于全稿绘制与底稿组装后插入。
+- 标题、正文、图表与必要来源信息清楚可读，角落保持清爽。
+- 数据图表使用已核实的数据、单位和定义，复杂图表可作为后插独立资产。
+- 当前任务的保密范围、视觉限制与获准工具渠道。
+- 质量约束：处理密集小字、模糊、无关装饰、文字遮挡、图形拉伸与事实失真等问题。
+
+### 每页底稿绘图提示词
+
+```markdown
+### 第 N 页：标题
+
+底稿绘图提示词：
+[写全本页画幅、选定风格、准确文字、构图、字号层级、背景、图形及必要数据。对每个图片位置明确位置与大小，保持该区域清洁；明确其周边文字与边界。]
+
+配图后插任务：
+- slot_id：与 image_slots.json 一致。
+- 图片用途与事实要求：与本页论点相符。
+- 配图提示词或检索要求：说明单独配图的主体、视角、比例、来源和原生像素需求，在底稿组装后执行。
+- 裁切、透明边界、焦点与遮罩要求：与空位和整体风格相符。
+
+检查点：本页易错文字、关键数据、图表结构、图片空位与层级。
+
+排除项：该页明确需要排除的内容与已观察到的问题。
+```
+
+每页提示词自包含，体现同一套确定的视觉基准。底稿提示词与配图任务分开，执行顺序按主流程保持一致。无配图页明确写“本页无后插配图”。
+
+## 与最终文件同步
+
+风格选择、逐页计划、图片位置清单、正式底稿、完整成图及两版 PPT 使用相同页码。修改关键文案、图表数据或配图后同步相关文档，再更新受影响页面与两份最终文件。新增文档和导出文件的作者身份字段为“用户”。

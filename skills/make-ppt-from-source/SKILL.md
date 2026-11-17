@@ -1,140 +1,94 @@
 ---
 name: make-ppt-from-source
-description: Create a complete PPT production workflow from user-provided data sources for project defense, proposal defense, roadshow, reporting, academic defense, or other structured presentation tasks. Use when the user asks to upload or provide PPT source data, analyze and decompose the material, confirm PPT requirements and optional reference master/template, generate a full deck-planning prompt document plus per-slide AI image prompts, call an AI image model such as image2 to render slides page by page, assemble the rendered images into a PPT/PPTX file, and generate a matching presentation speech script from the final PPT and original data source.
+description: "基于用户资料制作答辩、汇报、路演等完整PPT：先展示5种风格，每种一张含封面、7张代表性正文和结尾的九宫格，用户选定后逐页绘制；配图先留位，绘制组装后插入，再衔接图片转可编辑进行对象级可编辑转换，交付纯图片版与可编辑版两份PPT及配套提示词、演讲稿。适用于从资料到成套PPT的制作与修订。"
 ---
 
-# Make PPT From Source
+# 从资料制作 PPT：五种风格预览与双版本交付
 
-## Overview
+## 工作目标与约定
 
-Use this skill to turn source materials into a complete image-based PPT deck workflow. Match the user's language in all user-facing outputs. For Chinese users, write the prompt documents and final status in Chinese.
+沿用资料分析、需求确认、两份提示词文档、逐页绘制、组装和配套演讲稿的完整流程，增加风格选择、配图后插和图片转可编辑 转换。默认使用中文，与用户当次要求保持一致。
 
-The required outputs are:
+固定顺序：**资料分析 → 需求对齐 → 5 种风格九宫格 → 用户选定 → 定稿提示词 → 绘制留有图片位置的页面 → 组装底稿 → 插入配图 → 定稿纯图片版 → 图片转可编辑 转换 → 校验可编辑版 → 双版本交付与演讲稿。**
 
-1. A deck-level prompt document modeled after a complete project-defense PPT prompt.
-2. A per-slide AI drawing prompt document modeled after a page-by-page image prompt guide.
-3. One rendered 16:9 image per slide, generated sequentially with `image2` or the available equivalent image-generation tool.
-4. A PPT/PPTX assembled from the rendered slide images, using a reference master/template when the user provides one.
-5. A matching presentation speech script generated from the final PPT and original source data.
+- 正式全稿绘制以用户选定风格为前提。预览是选样阶段；默认恰好展示 5 种，每种一张独立的 3×3 九宫格。用户明确调整数量或跳过选样时，遵循当次指示。
+- 配图页在底稿阶段留出清洁、准确的图片位置；配图在页面绘制与底稿组装完成后插入。最终两份 PPT 均使用配图补齐后的内容。
+- 默认交付 `项目名_纯图片版.pptx` 与 `项目名_可编辑版.pptx`。普通文字、表格和简单图形在第二份中转换为原生对象；照片、复杂插图和艺术字保留为可独立选择、移动、替换的图片对象。
+- 优先采用本地工具。MCP 服务以用户在当前任务中明确授权的服务和操作为边界，技能调用与依赖说明均不构成 MCP 授权。Packy 通道仅用于用户在当前绘图任务中明确指定该通道的情况，含间接调用。
+- 所有新建、修改、导出文件的作者、创建者、最后修改者等可编辑身份字段统一填写“用户”，交付前检查内部元数据与可访问的文件属性。工作文件按版本保留，清理遵循用户的逐文件操作要求。
 
-## Workflow
+## 1. 接收并分析资料
 
-### 1. Collect Source Data
+接受 DOCX、PDF、PPTX、Markdown、文本、表格、图片、网页链接及粘贴材料。已有材料先读后问，确实缺少内容来源时再向用户索取。
 
-If the user has not provided source material, stop and ask them to upload it. Accept DOCX, PDF, PPTX, Markdown, text, spreadsheets, images, URLs, or pasted notes.
+提取标题、章节、表格、指标、公式、定义、项目与机构名称和源文件位置，保存可追溯的工作稿。识别原 PPT 的用途：内容来源、视觉参考或两者兼有。梳理主题、场景、受众、论证主线、证据、建议页数及适合图表、流程或配图的页面。核实事实、数据口径与学术概念；缺项保持明确记录。
 
-When files are provided:
+敏感材料按用户允许的抽象层级呈现，图示围绕必要的系统结构与信息表达。
 
-- Extract the text and tables into a working Markdown source.
-- Preserve document titles, headings, tables, metrics, formulas, definitions, project names, stakeholder names, and source filenames.
-- Treat user-provided PPT/PPTX files as either source content or a visual/master reference; ask which role they should play if unclear.
-- For sensitive or defense-related content, keep visuals abstract and system-oriented. Do not create realistic weapon details, attack scenes, classified deployment diagrams, or operational instructions.
+## 2. 对齐需求
 
-### 2. Analyze And Decompose
+读取 [需求清单](references/requirements-checklist.md)，结合材料一次性给出有判断的建议，集中确认仍影响制作的事项。用户已经明确的要求直接沿用。
 
-Read the source before asking detailed questions. Produce a concise internal decomposition:
+覆盖画幅、页数、受众、场景、叙事、色彩、字体、图标、图片来源、参考模板、演讲时间和备注。默认 16:9，分辨率请求优先 3840×2160，最低目标 1920×1080，实际以工具输出验收。其他画幅沿用用户确认的比例，并保持成图、对象清单和两版PPT的画布一致。
 
-- Topic and project name.
-- Presentation scenario and likely audience.
-- Core problem, value proposition, evidence, solution, tasks, indicators, team/foundation, budget/benefit, and next-step recommendation.
-- Candidate narrative arc.
-- Candidate page count and page groups.
-- Visual risks: dense tables, sensitive content, ambiguous claims, missing data, or pages needing charts.
+## 3. 展示 5 种风格九宫格，等待选择
 
-### 3. Confirm Requirements
+正式绘制前读取 [风格预览与选择](references/style-preview.md)。依据真实材料拟定同一组 9 张代表页面，以相同内容分别表现 5 种有实质差异的视觉风格。
 
-Read `references/requirements-checklist.md`, then present one bundled recommendation set to the user and wait for explicit confirmation or edits before writing the final prompt documents.
+每种风格均包含 **1 张封面 + 7 张代表性正文 + 1 张结尾**；正文覆盖资料中适用的文字、数据图表、流程、比较、图文与结论布局。每种风格独立呈现一张九宫格，提供简短名称与选择编号。页面文字随图生成，图片位置保持预留；风格名称和预览说明放在对话中。
 
-Always include the `ppt-master`-style core confirmations:
+默认可直接生成完整九宫格；需要更稳定的分格与细节时，生成 9 张样张后使用 `scripts/make_style_grid.py` 拼接。该脚本只做缩略拼图。展示实际图片后等待用户选定或提出组合修改，再确定字体、配色、版式和图表规范。用户的风格选择同时确认已说明且保持不变的需求，避免重复确认。
 
-- Canvas format.
-- Page count range.
-- Target audience.
-- Style objective.
-- Color scheme.
-- Icon usage approach.
-- Typography plan.
-- Image usage approach.
+## 4. 定稿两份提示词文档与图片位置清单
 
-Also ask whether the user has a PPT master/template/reference deck to upload. If a template is provided, use it as the visual style and layout reference unless the user says it is source content only.
+读取 [提示词文档规范](references/prompt-documents.md)，保存：
 
-### 4. Generate The Two Prompt Documents
+- `ppt_complete_prompt.md`：总体提示词、叙事结构、逐页目标、准确文案、布局、图片位置及讲稿要点。
+- `per_slide_image_prompts.md`：统一绘图规范、逐页底稿提示词、稍后使用的配图提示词或检索要求、逐页检查点。
+- `image_slots.json`：配图页面、位置、尺寸、用途、来源要求、裁切方式与插入状态；字段见 [配图后插与可编辑转换](references/late-images-and-editable.md)。
 
-Read `references/prompt-documents.md`.
+记录选定风格和对应预览文件，正式页引用同一视觉基准。用户需要 Word 时再导出对应文档。
 
-Create a project working folder and save both documents there, preferably as Markdown first:
+## 5. 绘制页面并组装留位底稿
 
-- `ppt_complete_prompt.md`
-- `per_slide_image_prompts.md`
+按定稿提示词依页序绘制，使用当次可用且获准的图像工具。模型、分辨率与通道按实际能力陈述。所有应出现的页面文字直接绘制进图片，校对后形成 `layout_slides/slide_001.png` 等底稿。
 
-Use Chinese filenames too when the user explicitly wants the output filenames to mirror Chinese reference documents. Export to DOCX when the user asks for Word files or when the workflow expects DOCX deliverables.
+图片位置保留与构图一致的干净空白或留位面板，边界与 `image_slots.json` 一致。普通照片、独立插图、截图等配图留到后续阶段；底稿先完成文字、背景、框架和已确认的页面信息。正式数据图表依据真实数据制作，保留轴、单位和标签的准确性。
 
-The deck-level prompt document must include:
+逐页核对文案、数字、清晰度、留白与预留位置。页面只保留有信息作用的标签和必要来源，角落保持清爽。全部底稿完成后，先以整页图片按序组装 `working/项目名_留位底稿.pptx`。参考模板用于保持画幅、主题、字体和布局，优先遵循用户确认的视觉规则。
 
-- Usage notes.
-- A directly reusable total prompt.
-- Overall structure and narrative thread.
-- A page-by-page plan where every page includes: page number and title, page objective, slide body copy, visual presentation suggestion, and speaker-script points.
+## 6. 组装后插图，定稿纯图片版
 
-The per-slide AI drawing prompt document must include:
+读取 [配图后插与可编辑转换](references/late-images-and-editable.md) 的配图部分。底稿组装完成后，为每个位置选择、获取或绘制适合的独立图片，再插入对应位置。保留原图、出处和最终裁切，检查图片与文字的层级、比例、清晰度和内容关联。
 
-- Unified drawing specification.
-- Universal negative prompt.
-- For every slide: slide title, AI drawing prompt, image keywords, and negative prompt.
+逐页检查补图后的实际页面，保存高清 `final_slides/slide_001.png` 等完整成图，再按原顺序创建 `outputs/项目名_纯图片版.pptx`：每页一个铺满画布的完整图片对象，备注独立保存。可先在底稿 PPT 内插入图片并导出；本地合成时也应在底稿组装后执行，将合成成图重新组装为最终纯图片版。
 
-### 5. Generate Slide Images
+所有必须配图的位置核验完成后才进入转换。真实照片、截图、Logo 与事实图表保留其原始信息；示意插图按用途说明，资料缺失项以实际状态告知用户。
 
-Use the confirmed prompt documents as the only source of slide image generation instructions.
+## 7. 图片转可编辑，生成第二份 PPT
 
-- Generate images sequentially by slide number.
-- Use `image2` when available. If the session exposes only another image-generation tool, use the closest available equivalent and state the substitution.
-- Use 16:9 landscape output, preferably 3840x2160 or 1920x1080.
-- Keep text sparse in generated images. Use large labels, diagrams, charts, dashboards, matrices, flow diagrams, maps, and abstract system visuals.
-- Save files with stable names such as `slide_001.png`, `slide_002.png`, etc.
-- After each image, check whether the rendered page follows the prompt, is legible, and is safe. Regenerate or adjust the prompt when necessary.
+读取 [可编辑转换规范](references/editable-conversion.md)。本技能提供独立的 `scripts/build_decks.py`，依据代理根据最终成图建立的对象清单，生成图片版与原生可编辑版。安装依赖使用技能目录的 `requirements.txt`，优先放入任务本地虚拟环境。
 
-### 6. Assemble The PPT
+以**完成配图的高清最终成图**和准确原文为依据，逐页记录普通文字、图形、线条、表格、数据图表及独立图片的位置、内容和层级，保存 `editable_manifest.json`。普通文字逐行保留，复杂视觉使用独立高清图片，真实配图直接复用选定素材。背景使用纯色或另行准备的无字背景，保持文字的独立编辑能力。
 
-Create a PPT/PPTX using one full-slide image per page.
+```text
+python <skill-root>/scripts/build_decks.py <project>/editable_manifest.json --out-dir <project>/outputs --mode both
+```
 
-- If the user provided a reference PPT master/template, preserve its slide size, theme, and master style when possible, then place each generated image full-bleed on a blank layout.
-- If no template is provided, create a 16:9 deck.
-- Maintain the same slide order and titles as the two prompt documents.
-- Add speaker notes from the deck-level prompt document when the available PPT tooling supports notes.
-- If the user asks for editable text, create editable title/body overlays or switch to a native-PPT/SVG workflow instead of image-only slides.
+工具输出两份 PPTX 与对象清单审计。按用户需要命名为 `项目名_纯图片版.pptx` 和 `项目名_可编辑版.pptx`。用 `scripts/inspect_pptx.py` 检查对象、内嵌素材与署名，用 `scripts/render_deck.py` 实际渲染两份完整文件，逐页对照最终成图修正。转换与检查按页数完整执行，保留原生像素、精确数据、页序及备注。根据主机条件也可采用用户明确指定的兼容转换工具，继续遵守相同交付标准。
 
-### 7. Generate The Speech Script
+## 8. 演讲稿与最终验收
 
-Read `references/speaker-script.md`.
+读取 [演讲稿规范](references/speaker-script.md)，以两份定稿 PPT 的共同页序、最终成图和原资料生成 `presentation_speech_script.md`，按用户要求导出 Word，并同步两份 PPT 的讲者备注。
 
-Generate the speech script after the PPT/PPTX exists, not before. Use the final PPT slide order, the deck-level page plan, the rendered slide images when available, and the original data source.
+交付前检查：
 
-The script must:
+- 两份文件的页数、页序、标题、数据、配图与讲稿一致，全部图片位置均已处理。
+- 纯图片版每页仅含一个完整页面图片；可编辑版的普通文字可修改，表格和简单图形可独立编辑，配图可独立替换。
+- 两份最终 PPT 已由实际办公软件渲染并查看，转换与合并保持布局、层级、清晰度和准确内容。
+- 逐页对象记录及最终媒体像素检查与当前文件对应，实际内嵌图片保留足够原生像素。
+- 作者、创建者、最后修改者等可编辑身份字段为“用户”，文件名与版本清晰。
 
-- Match the confirmed audience, scenario, tone, and time limit.
-- Follow the final slide order exactly.
-- Explain what the audience sees on each slide, but not merely read the slide text.
-- Restore important source-data logic that may have been compressed on the visual slide.
-- Include transitions between sections and slides.
-- Highlight decision points, risks, quantitative indicators, and conclusions.
-- Keep sensitive content at the same abstraction level used in the PPT.
+## 交付内容
 
-Save the script as `presentation_speech_script.md` by default. Export to DOCX when the user asks for Word output.
-
-### 8. Final QA
-
-Before returning the deck, check:
-
-- Slide count matches the prompt documents.
-- All images are present and ordered correctly.
-- No slide is blank, distorted, cropped incorrectly, or visibly low-resolution.
-- Important text is legible and not overcrowded.
-- The template/master style, if provided, is reflected.
-- The speech script matches the final PPT slide count and sequence.
-- The speech script is grounded in the original data source and does not invent claims.
-- Sensitive content is represented abstractly and safely.
-- Output files are clearly named and located in the project folder.
-
-## Output To User
-
-Return the PPT/PPTX path, the two prompt document paths, the slide image folder, and the speech-script path. Briefly summarize page count, style, speaking duration, and any substitutions or unresolved limitations, such as missing notes support or unavailable `image2`.
+优先提供**纯图片版 PPTX**与**可编辑版 PPTX**的可点击路径，再提供两份提示词文档、演讲稿、最终成图目录与 5 张风格九宫格。简述选定风格、页数、演讲时长及影响使用的真实缺项。此技能的更新任务只修改和校验技能文件；预览与 PPT 的生成在实际制作任务中执行。

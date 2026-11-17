@@ -1,0 +1,148 @@
+{
+  "title": "原生对象示例",
+  "file_stem": "native-example",
+  "canvas": [
+    1920,
+    1080
+  ],
+  "slides": [
+    {
+      "title": "从资料到作品",
+      "image": "source.png",
+      "background": {
+        "color": "F5F5F4"
+      },
+      "notes": "同一备注写入两份交付文件。",
+      "elements": [
+        {
+          "id": "title",
+          "kind": "text",
+          "box": [
+            100,
+            70,
+            1500,
+            130
+          ],
+          "text": "从资料到作品",
+          "font_size": 96,
+          "bold": true,
+          "color": "17374A"
+        },
+        {
+          "id": "subtitle",
+          "kind": "text",
+          "box": [
+            100,
+            220,
+            1400,
+            80
+          ],
+          "runs": [
+            {
+              "text": "5种风格",
+              "bold": true
+            },
+            {
+              "text": " · 两份PPT"
+            }
+          ],
+          "font_size": 44
+        },
+        {
+          "id": "panel",
+          "kind": "shape",
+          "box": [
+            90,
+            350,
+            790,
+            600
+          ],
+          "shape": "roundRect",
+          "fill": "EAF7FE"
+        },
+        {
+          "id": "arrow",
+          "kind": "line",
+          "points": [
+            [
+              140,
+              840
+            ],
+            [
+              350,
+              840
+            ],
+            [
+              350,
+              895
+            ]
+          ],
+          "color": "27AEF5",
+          "line_width": 5,
+          "end_arrow": true
+        },
+        {
+          "id": "image",
+          "kind": "image",
+          "box": [
+            610,
+            680,
+            180,
+            180
+          ],
+          "path": "icon.png",
+          "fit": "contain"
+        },
+        {
+          "id": "table",
+          "kind": "table",
+          "box": [
+            130,
+            395,
+            700,
+            220
+          ],
+          "rows": [
+            [
+              "输出",
+              "数量"
+            ],
+            [
+              "风格预览",
+              "5"
+            ],
+            [
+              "PPT版本",
+              "2"
+            ]
+          ],
+          "font_size": 38
+        },
+        {
+          "id": "chart",
+          "kind": "chart",
+          "box": [
+            990,
+            350,
+            790,
+            610
+          ],
+          "categories": [
+            "风格",
+            "PPT"
+          ],
+          "series": [
+            {
+              "name": "数量",
+              "values": [
+                5,
+                2
+              ]
+            }
+          ],
+          "chart_type": "column"
+        }
+      ]
+    }
+  ]
+}
